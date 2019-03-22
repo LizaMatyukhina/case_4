@@ -1,14 +1,15 @@
 from os import *
 from os.path import *
 
+
 # Просмотр каталога
 a = getcwd()
 names = listdir(a)
 files = []
 
-
 def moveUp():
     chdir('..')
+
 
 def moveDown(path):
     file = input('Введите название каталога: ')
@@ -18,16 +19,18 @@ def moveDown(path):
         print('Не удается найти указанный файл: ', file)
 
 
-def CountFiles(path, count):
-    if exists(path) == False:
+def CountFiles(path):
+    count = 0
+    if not exists(path):
         return
     files = listdir(path)
+    print(files)
     for file in files:
-        if isfile(file):
+        file_path = join(path, file)
+        if isfile(file_path):
             count += 1
         else:
-            CountFiles(file, count)
-    return count
+            CountFiles(file_path)
 
 
 def main():
@@ -48,8 +51,8 @@ def main():
         elif word == 3:
             moveDown(a)
         elif word == 4:
-            count = 0
-            print(CountFiles(a, count))
+            print(CountFiles(a))
+            print(sum(len(fs) for _, _, fs in walk(getcwd())))
 
         a = getcwd()
         print(a)
