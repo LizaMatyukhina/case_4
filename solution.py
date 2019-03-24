@@ -8,9 +8,14 @@ names = listdir(a)
 files = []
 
 def acceptCommand(x):
+    try:
+        x = int(x)
+    except:
+        n = input('Введите правильную команду: \n', )
+        acceptCommand(n)
     if (0<x<8)==False:
         n = input('Введите правильную команду: \n',)
-        acceptCommand(int(n))
+        acceptCommand(n)
     return (x)
 
 
@@ -53,6 +58,27 @@ def CountBytes():
 
     return bytes
 
+
+def findFiles(target, path):
+    inside = listdir(path)
+    for name in inside:
+        new = getcwd() + '/' + name
+        if isfile(new):
+            if name.find(target[0])!= -1:
+                target.append(new)
+        else:
+            try:
+                findFiles(target, new)
+            except:
+                pass
+    if len(target)!=1:
+        target.pop(0)
+        return target
+    else:
+        return ('Ничего не было найдено')
+
+
+
 def runCommand(word):
     while word != 7:
         if word == 1:
@@ -67,7 +93,10 @@ def runCommand(word):
         elif word == 5:
             print(CountBytes(), 'байт')
         elif word == 6:
-            print(findFiles(target, path))
+            a = input('Введите название файла: ')
+            target = []
+            target.append(a)
+            print(findFiles(target, getcwd()))
         main()
     if word == 7:
         print('Программа была закрыта, спасибо за работу!')
@@ -84,7 +113,7 @@ def main():
 Введите 5, чтобы получить размер текущего каталога
 Введите 6, чтобы найти файл
 Введите 7, чтобы закрыть программу''')
-    runCommand(acceptCommand(int(input())))
+    runCommand(acceptCommand(input()))
 
 
 
