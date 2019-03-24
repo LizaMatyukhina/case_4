@@ -1,6 +1,6 @@
 from os import *
 from os.path import *
-
+from sys import *
 
 # Просмотр каталога
 a = getcwd()
@@ -19,18 +19,33 @@ def moveDown(path):
         print('Не удается найти указанный файл: ', file)
 
 
-def CountFiles(path):
-    count = 0
-    if not exists(path):
-        return
-    files = listdir(path)
-    print(files)
-    for file in files:
-        file_path = join(path, file)
-        if isfile(file_path):
-            count += 1
-        else:
-            CountFiles(file_path)
+def CountFiles():
+    summ = 0
+    for _, _, files in walk(getcwd()):
+        count = len(files)
+        summ += count
+    return summ
+
+
+def CountBytes():
+    bytes = 0
+    a = []
+    j = 0
+    for k in list(walk(getcwd())):
+        a.append(k[0])
+
+    for _, _, files in walk(getcwd()):
+        size = 0
+        for file in files:
+            path = (a[j] + '/' + file)
+            if exists(path):
+                if isfile(path):
+                    size = getsize(path)
+        j += 1
+        bytes += size
+
+    return bytes
+
 
 
 def main():
@@ -40,6 +55,7 @@ def main():
     print('Введите 2, чтобы переместиться на уровень вверх')
     print('Введите 3, чтобы преместиться на уровень вниз')
     print('Введите 4, чтобы узнать количество файлов и каталогов')
+    print('Введите 5, чтобы получить размер текущего каталога')
     print('Введите 7, чтобы закрыть программу')
     word = int(input())
     while word != 7:
@@ -51,8 +67,9 @@ def main():
         elif word == 3:
             moveDown(a)
         elif word == 4:
-            print(CountFiles(a))
-            print(sum(len(fs) for _, _, fs in walk(getcwd())))
+            print(CountFiles())
+        elif word == 5:
+            print(CountBytes())
 
         a = getcwd()
         print(a)
@@ -61,6 +78,7 @@ def main():
         print('Введите 2, чтобы переместиться на уровень вверх')
         print('Введите 3, чтобы преместиться на уровень вниз')
         print('Введите 4, чтобы узнать количество файлов и каталогов')
+        print('Введите 5, чтобы получить размер текущего каталога')
         print('Введите 7, чтобы закрыть программу')
 
         word = int(input())
