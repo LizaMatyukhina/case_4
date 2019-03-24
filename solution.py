@@ -1,6 +1,6 @@
 from os import *
 from os.path import *
-from sys import *
+
 
 # Просмотр каталога
 a = getcwd()
