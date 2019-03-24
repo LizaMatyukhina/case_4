@@ -1,11 +1,18 @@
 from os import *
 from os.path import *
-
+import sys
 
 # Просмотр каталога
 a = getcwd()
 names = listdir(a)
 files = []
+
+def acceptCommand(x):
+    if (0<x<8)==False:
+        n = input('Введите правильную команду: \n',)
+        acceptCommand(int(n))
+    return (x)
+
 
 def moveUp():
     chdir('..')
@@ -46,45 +53,39 @@ def CountBytes():
 
     return bytes
 
+def runCommand(word):
+    while word != 7:
+        if word == 1:
+            for name in listdir(getcwd()):
+                print(name)
+        elif word == 2:
+            moveUp()
+        elif word == 3:
+            moveDown(getcwd())
+        elif word == 4:
+            print(CountFiles())
+        elif word == 5:
+            print(CountBytes(), 'байт')
+        elif word == 6:
+            print(findFiles(target, path))
+        main()
+    if word == 7:
+        print('Программа была закрыта, спасибо за работу!')
+        sys.exit()
 
 
 def main():
     a = getcwd()
     print(a)
-    print('Введите 1, чтобы просмотреть каталог')
-    print('Введите 2, чтобы переместиться на уровень вверх')
-    print('Введите 3, чтобы преместиться на уровень вниз')
-    print('Введите 4, чтобы узнать количество файлов и каталогов')
-    print('Введите 5, чтобы получить размер текущего каталога')
-    print('Введите 7, чтобы закрыть программу')
-    word = int(input())
-    while word != 7:
-        if word == 1:
-            for name in names:
-                print(name)
-        elif word == 2:
-            moveUp()
-        elif word == 3:
-            moveDown(a)
-        elif word == 4:
-            print(CountFiles())
-        elif word == 5:
-            print(CountBytes())
+    print('''Введите 1, чтобы просмотреть каталог
+Введите 2, чтобы переместиться на уровень вверх
+Введите 3, чтобы преместиться на уровень вниз
+Введите 4, чтобы узнать количество файлов и каталогов
+Введите 5, чтобы получить размер текущего каталога
+Введите 6, чтобы найти файл
+Введите 7, чтобы закрыть программу''')
+    runCommand(acceptCommand(int(input())))
 
-        a = getcwd()
-        print(a)
-
-        print('Введите 1, чтобы просмотреть каталог')
-        print('Введите 2, чтобы переместиться на уровень вверх')
-        print('Введите 3, чтобы преместиться на уровень вниз')
-        print('Введите 4, чтобы узнать количество файлов и каталогов')
-        print('Введите 5, чтобы получить размер текущего каталога')
-        print('Введите 7, чтобы закрыть программу')
-
-        word = int(input())
-
-    if word == 7:
-        print('Программа была закрыта, спасибо за работу!')
 
 
 if __name__ == "__main__":
