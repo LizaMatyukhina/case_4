@@ -64,13 +64,8 @@ def findFiles(target, path):
     for name in inside:
         new = getcwd() + '/' + name
         if isfile(new):
-            if name.find(target[0])!= -1:
-                target.append(new)
-        else:
-            try:
-                findFiles(target, new)
-            except:
-                pass
+            if name.find(target[0]) != -1:
+                target.append(normpath(new))
     if len(target)!=1:
         target.pop(0)
         return target
