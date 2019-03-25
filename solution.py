@@ -60,12 +60,18 @@ def CountBytes():
 
 
 def findFiles(target, path):
-    inside = listdir(path)
-    for name in inside:
-        new = getcwd() + '/' + name
-        if isfile(new):
-            if name.find(target[0]) != -1:
-                target.append(normpath(new))
+    a = []
+    j = 0
+    for k in list(walk(getcwd())):
+        a.append(k[0])
+
+    for _, _, files in walk(path):
+        for file in files:
+            new = a[j] + '/' + file
+            if isfile(new):
+                if file.find(target[0]) != -1:
+                    target.append(normpath(new))
+        j+=1
     if len(target)!=1:
         target.pop(0)
         return target
